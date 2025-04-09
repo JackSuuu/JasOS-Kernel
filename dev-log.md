@@ -10,11 +10,12 @@ File Systems: Add support for file systems (e.g., FAT, ext2).
 
 Here are some areas you can expand upon:
 
-Writing Drivers: Implement drivers for hardware like the keyboard, display, or disk drives.
-System Calls: Create an API for user-space programs to interact with the kernel.
-Networking: Implement networking protocols like TCP/IP for communication.
+- Writing Drivers: Implement drivers for hardware like the keyboard, display, or disk drives.
+- System Calls: Create an API for user-space programs to interact with the kernel.
+- Networking: Implement networking protocols like TCP/IP for communication.
+
 Additional Resources:
-OSDev Wiki: A fantastic resource for OS development tutorials and guides.
+- OSDev Wiki: A fantastic resource for OS development tutorials and guides.
 "Operating Systems: Design and Implementation" by Tanenbaum: This book uses Minix (a Unix-like OS) and provides great insights into OS concepts.
 "The Linux Kernel Development" by Robert Love: Great if you want to dive into kernel development based on Linux.
 

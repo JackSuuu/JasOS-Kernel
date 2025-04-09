@@ -1,20 +1,30 @@
 # JsOS-Kernel
 
-It is a Unix based bare-metal OS kernel which I developed for delve into a depth of understanding how operating system work and the complex mechanism behind it.
+JsOS-Kernel is a Unix-based, bare-metal operating system kernel developed to explore the inner workings of operating systems and understand the complex mechanisms behind them. This project provides a hands-on experience with OS development on ARM architecture.
 
-## Run the kernel
+## Running the Kernel
+
+To run the kernel in a QEMU emulator, use the following command:
 
 ```shell
 qemu-system-arm -machine versatilepb -cpu arm1176 -nographic -kernel kernel.bin
 ```
 
-To terminate the emulator:
+or
 
 ```shell
-# Key sequence: Ctrl+A → X
+make run
 ```
 
-## Technology
+### Terminating the Emulator
 
-- the ARM cross-compiler (arm-none-eabi-g++), which is suitable for bare-metal development.
-- qemu-system-arms
+To stop the emulator, use the following key sequence:
+
+```shell
+# Ctrl + A → X
+```
+
+## Technology Stack
+
+- **ARM Cross-Compiler**: Utilizes `arm-none-eabi-g++`, ideal for bare-metal development on ARM architecture.
+- **QEMU**: Emulates ARM hardware with `qemu-system-arm` to test and run the kernel.
