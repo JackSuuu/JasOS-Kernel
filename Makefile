@@ -1,17 +1,21 @@
-CXX = i686-elf-g++ # Use the cross compiler (i686 for x86 architecture)
-CXXFLAGS = -ffreestanding -std=c++17 -O2 -Wall
-LDFLAGS = -T linker.ld
-
-SRC = kernel.cpp
-OBJ = $(SRC:.cpp=.o)
+# Compile and run the kernel
+CC = arm-none-eabi-g++
+CFLAGS = -nostdlib -ffreestanding -nostartfiles -mcpu=arm1176jzf-s -c
+LDFLAGS = -nostdlib -ffreestanding -nostartfiles -T linker.ld
 
 all: kernel.bin
 
-kernel.bin: $(OBJ)
-	$(CXX) $(LDFLAGS) -o $@ $^
+kernel.o: kernel.cpp
+	$(CC) $(CFLAGS) $< -o $@
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+kernel.elf: kernel.o linker.ld
+	$(CC) $(LDFLAGS) kernel.o -o $@
+
+kernel.bin: kernel.elf
+	arm-none-eabi-objcopy -O binary $< $@
+
+run: kernel.bin
+	qemu-system-arm -machine versatilepb -cpu arm1176 -nographic -kernel kernel.bin
 
 clean:
-	rm -f $(OBJ) kernel.bin
+	rm -f kernel.o kernel.elf kernel.bin

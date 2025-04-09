@@ -1,11 +1,24 @@
-extern "C" void kernel_main() {
-    const char* hello = "Hello, Kernel!";
-    char* video_memory = (char*) 0xB8000; // Video memory location for text mode
-    for (int i = 0; hello[i] != '\0'; i++) {
-        video_memory[i * 2] = hello[i];      // Write the character
-        video_memory[i * 2 + 1] = 0x0F;     // White text on black background
-    }
+// Add forward declaration for main()
+void main();
 
-    // Infinite loop to keep the kernel running
-    while (1) {}
+// Kernel entry point and UART output code
+extern "C" void _start() {
+    // Set stack pointer to 0x8000
+    asm volatile("ldr sp, =0x8000");
+    main();
+    while (1); // Halt after main returns
+}
+
+// Write a character to UART
+void uart_putc(char c) {
+    volatile unsigned int *uart = (volatile unsigned int *)0x101f1000;
+    *uart = c; // Write to UART data register
+}
+
+// Main function prints "Hello World!"
+void main() {
+    const char *str = "Hello World!\nWelcome to JsOS\n";
+    while (*str) {
+        uart_putc(*str++);
+    }
 }

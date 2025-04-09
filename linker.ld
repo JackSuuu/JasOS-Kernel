@@ -1,17 +1,11 @@
-ENTRY(kernel_main)
-
+/* Linker script to configure memory layout */
+ENTRY(_start)
 SECTIONS {
-    . = 1M; /* Start the kernel at the 1MB mark */
-    
+    . = 0x10000; /* Kernel load address for QEMU versatilepb */
     .text : {
-        *(.text)   /* All the code goes into the .text section */
+        *(.text)   /* Code */
+        *(.rodata) /* Read-only data (e.g., strings) */
     }
-
-    .data : {
-        *(.data)   /* Initialized data goes here */
-    }
-    
-    .bss : {
-        *(.bss)    /* Uninitialized data */
-    }
+    .data : { *(.data) }
+    .bss  : { *(.bss)  }
 }
