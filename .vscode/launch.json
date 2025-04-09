@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/jacksu/Desktop/PROJECTS/JsOS-kernel",
+      "program": "/Users/jacksu/Desktop/PROJECTS/JsOS-kernel/build/Debug/outDebug"
+    }
+  ]
+}
