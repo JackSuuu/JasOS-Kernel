@@ -1,6 +1,6 @@
-# JsOS-Kernel
+# JasOS Kernel
 
-JsOS-Kernel is a Unix-based, bare-metal operating system kernel developed to explore the inner workings of operating systems and understand the complex mechanisms behind them. This project provides a hands-on experience with OS development on ARM architecture.
+**JasOS** Kernel is a Unix-based, bare-metal operating system kernel developed to explore the inner workings of operating systems and understand the complex mechanisms behind them. This project provides a hands-on experience with OS development on ARM architecture.
 
 ## Running the Kernel
 
