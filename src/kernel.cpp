@@ -12,14 +12,35 @@ void test_task() {
 }
 
 extern "C" void _start_cpp() {
+    // Output debug markers directly
+    volatile unsigned int* uart_dr = (volatile unsigned int*)(0x101f1000);
+    *uart_dr = 'X';
+    
+    // Initialize hardware
     uart_init();
+    
+    // Send immediate debug output
+    uart_puts("UART initialized\r\n");
+    *uart_dr = 'A';
+    
+    // Continue with normal initialization
     timer_init(1000000);  // 1MHz clock
+    uart_puts("Timer initialized\r\n");
+    *uart_dr = 'B';
+    
     scheduler_init();
+    uart_puts("Scheduler initialized\r\n");
+    *uart_dr = 'C';
     
     // Create a test task
     create_task(test_task);
+    uart_puts("Task created\r\n");
+    *uart_dr = 'D';
     
+    // Enter main kernel loop
     kernel_main();
+    
+    // Should never get here
     while(1);
 }
 

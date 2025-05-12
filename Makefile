@@ -6,12 +6,13 @@ OBJCOPY = arm-none-eabi-objcopy
 SRC_DIR = src
 BUILD_DIR = build
 
-CFLAGS = -mcpu=arm1176jzf-s -I$(SRC_DIR) -ffreestanding -nostdlib -Wall
+CFLAGS = -mcpu=arm1176jzf-s -I$(SRC_DIR) -ffreestanding -nostdlib -Wall -fno-exceptions -fno-rtti
 ASFLAGS = -mcpu=arm1176jzf-s
 LDFLAGS = -nostdlib -T $(SRC_DIR)/linker.ld
 
-CPP_SRCS = $(wildcard $(SRC_DIR)/*.cpp)
-ASM_SRCS = $(wildcard $(SRC_DIR)/*.s)
+# Exclude test files from the build
+CPP_SRCS = $(filter-out $(SRC_DIR)/uart-test.cpp, $(wildcard $(SRC_DIR)/*.cpp))
+ASM_SRCS = $(filter-out $(SRC_DIR)/uart-asm-test.s, $(wildcard $(SRC_DIR)/*.s))
 OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(CPP_SRCS)) \
        $(patsubst $(SRC_DIR)/%.s,$(BUILD_DIR)/%.o,$(ASM_SRCS))
 DEPS = $(OBJS:.o=.d)
@@ -38,6 +39,6 @@ clean:
 	rm -rf $(BUILD_DIR) kernel.elf kernel.bin
 
 run: kernel.bin
-	qemu-system-arm -machine versatilepb -cpu arm1176 -nographic -kernel kernel.bin
+	qemu-system-arm -machine versatilepb -cpu arm1176 -chardev stdio,id=char0 -serial chardev:char0 -kernel kernel.bin -d int,cpu_reset,unimp,guest_errors
 
--include $(DEPS) 
+-include $(DEPS)
