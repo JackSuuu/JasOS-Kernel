@@ -1,3 +1,5 @@
+#include <stdint.h>
+#include <stddef.h>
 #include "memory.hpp"
 
 #define HEAP_SIZE 0x10000

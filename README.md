@@ -1,30 +1,40 @@
-# JasOS Kernel
+# JSOS - Minimal ARM Kernel OS
 
-**JasOS** Kernel is a Unix-based, bare-metal operating system kernel developed to explore the inner workings of operating systems and understand the complex mechanisms behind them. This project provides a hands-on experience with OS development on ARM architecture.
+A simple operating system kernel for ARM architecture.
 
-## Running the Kernel
+## Project Structure
 
-To run the kernel in a QEMU emulator, use the following command:
+All files are now organized in a flat structure:
+- `src/` - Contains all source code files (.cpp, .s) and header files (.hpp)
+- `build/` - Generated during build, contains object files
+- `Makefile` - Build configuration
+- `kernel.bin` - Final binary output
 
-```shell
-qemu-system-arm -machine versatilepb -cpu arm1176 -nographic -kernel kernel.bin
+## Building
+
+To build the project, simply run:
+
+```bash
+make
 ```
 
-or
+## Running
 
-```shell
+To run the OS in QEMU emulator:
+
+```bash
 make run
 ```
 
-### Terminating the Emulator
+## Features
 
-To stop the emulator, use the following key sequence:
+- Simple UART-based console
+- Basic task scheduler
+- Timer interrupts
+- Memory allocation
 
-```shell
-# Ctrl + A → X
-```
+## Development Notes
 
-## Technology Stack
-
-- **ARM Cross-Compiler**: Utilizes `arm-none-eabi-g++`, ideal for bare-metal development on ARM architecture.
-- **QEMU**: Emulates ARM hardware with `qemu-system-arm` to test and run the kernel.
+- The kernel starts at `_start` in vector.s
+- The C++ entry point is `_start_cpp` in kernel.cpp
+- The system uses a flat memory model with a simple memory allocator 

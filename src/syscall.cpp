@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include "syscalls.hpp"
 #include "uart.hpp"
 

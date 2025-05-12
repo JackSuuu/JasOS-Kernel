@@ -1,6 +1,6 @@
-build/kernel.o: src/kernel.cpp include/kernel.hpp include/uart.hpp \
- include/scheduler.hpp include/timer.hpp
-include/kernel.hpp:
-include/uart.hpp:
-include/scheduler.hpp:
-include/timer.hpp:
+build/kernel.o: src/kernel.cpp src/kernel.hpp src/uart.hpp \
+ src/scheduler.hpp src/timer.hpp
+src/kernel.hpp:
+src/uart.hpp:
+src/scheduler.hpp:
+src/timer.hpp:

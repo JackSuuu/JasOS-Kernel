@@ -3,11 +3,22 @@
 #include "scheduler.hpp"
 #include "timer.hpp"
 
-extern "C" void _start() {
-    asm volatile("ldr sp, =0x8000");
+// Test task
+void test_task() {
+    while(1) {
+        uart_puts("[Task] Hello from task!\r\n");
+        for(volatile int i=0; i<1000000; i++); // Delay
+    }
+}
+
+extern "C" void _start_cpp() {
     uart_init();
     timer_init(1000000);  // 1MHz clock
     scheduler_init();
+    
+    // Create a test task
+    create_task(test_task);
+    
     kernel_main();
     while(1);
 }

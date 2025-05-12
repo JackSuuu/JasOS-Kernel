@@ -1,3 +1,7 @@
+#include <stdint.h>
+#include "timer.hpp"
+#include "scheduler.hpp"
+
 // ARM Timer (SP804)
 volatile uint32_t* timer = (volatile uint32_t*)0x101E2000;
 
