@@ -1,21 +1,19 @@
-PREFIX = arm-none-eabi-
-CC = $(PREFIX)gcc
-AS = $(PREFIX)as
-LD = $(PREFIX)ld
-OBJCOPY = $(PREFIX)objcopy
+CC = arm-none-eabi-gcc
+AS = arm-none-eabi-as
+LD = arm-none-eabi-ld
+OBJCOPY = arm-none-eabi-objcopy
 
 # Compiler flags
-CFLAGS = -Wall -Wextra -std=c++17 -ffreestanding -O2 -nostdlib -Isrc -fno-exceptions -fno-rtti
-ASFLAGS = -Isrc
+CFLAGS = -mcpu=arm1176jzf-s -fpic -ffreestanding -std=c++11 -O2 -Wall -Wextra -nostdlib -fno-exceptions -fno-rtti
+ASFLAGS = -mcpu=arm1176jzf-s
 LDFLAGS = -nostdlib
 
 # Source files
 SOURCE_DIR = src
-SOURCES_CPP = $(SOURCE_DIR)/kernel.cpp \
+SOURCES_CPP = $(SOURCE_DIR)/kernel_simple.cpp \
               $(SOURCE_DIR)/uart.cpp \
               $(SOURCE_DIR)/memory.cpp \
-              $(SOURCE_DIR)/process.cpp \
-              $(SOURCE_DIR)/monitor.cpp
+              $(SOURCE_DIR)/process.cpp
 
 SOURCES_ASM = $(SOURCE_DIR)/vector.s
 
@@ -25,13 +23,13 @@ OBJECTS_ASM = $(SOURCES_ASM:.s=.o)
 OBJECTS = $(OBJECTS_CPP) $(OBJECTS_ASM)
 
 # Output files
-TARGET = kernel.bin
+TARGET = kernel_simple.bin
 LINKER_SCRIPT = $(SOURCE_DIR)/linker.ld
 
 # Path to libgcc
 LIBGCC = $(shell $(CC) -print-libgcc-file-name)
 
-.PHONY: all clean
+.PHONY: all clean run
 
 all: $(TARGET)
 
@@ -48,4 +46,4 @@ clean:
 	rm -f $(OBJECTS) $(TARGET)
 
 run: $(TARGET)
-	./run_uart_only.sh
+	qemu-system-arm -M versatilepb -m 128M -kernel $(TARGET) -nographic 

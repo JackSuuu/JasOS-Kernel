@@ -1,0 +1,46 @@
+PREFIX = arm-none-eabi-
+CC = $(PREFIX)gcc
+AS = $(PREFIX)as
+LD = $(PREFIX)ld
+
+CFLAGS = -Wall -Wextra -std=c++17 -ffreestanding -O2 -nostdlib -Isrc -fno-exceptions -fno-rtti
+ASFLAGS = -Isrc
+LDFLAGS = -nostdlib
+
+BUILD_DIR = build
+SRC_DIR = src
+
+# Use the test kernel source
+KERNEL_SRC = $(SRC_DIR)/kernel_uart_test.cpp
+UART_SRC = $(SRC_DIR)/uart.cpp
+VECTOR_SRC = $(SRC_DIR)/vector.s
+
+# Object files
+KERNEL_OBJ = $(KERNEL_SRC:.cpp=.o)
+UART_OBJ = $(UART_SRC:.cpp=.o)
+VECTOR_OBJ = $(VECTOR_SRC:.s=.o)
+
+OBJECTS = $(KERNEL_OBJ) $(UART_OBJ) $(VECTOR_OBJ)
+
+# Output files
+TARGET = kernel_uart_test.bin
+LINKER_SCRIPT = $(SRC_DIR)/linker.ld
+
+.PHONY: all clean run
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS) $(LINKER_SCRIPT)
+	$(LD) $(LDFLAGS) -T $(LINKER_SCRIPT) -o $(TARGET) $(OBJECTS)
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: %.s
+	$(AS) $(ASFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OBJECTS) $(TARGET)
+
+run: $(TARGET)
+	qemu-system-arm -M versatilepb -m 128M -nographic -serial mon:stdio -kernel $(TARGET)
