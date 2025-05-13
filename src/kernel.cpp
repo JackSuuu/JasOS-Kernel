@@ -1275,10 +1275,25 @@ extern "C" void _start_cpp() {
     // Initialize UART
     uart_init();
     uart_puts("\n\n");
-    uart_puts("=======================================\n");
-    uart_puts("     JasOS Kernel v0.2 (UART ONLY)     \n");
-    uart_puts("=======================================\n\n");
+    // Display colorful JasOS logo - using ANSI color codes
+    uart_puts("\033[1;36m");  // Bright cyan color
+    uart_puts("___        __        ________      ______      ________  \n");
+    uart_puts("\033[1;34m");  // Bright blue color
+    uart_puts("     |\"  |      /\"\"\\      /\"       )    /    \" \\    /\"       ) \n");
+    uart_puts("\033[1;35m");  // Bright magenta color
+    uart_puts("     ||  |     /    \\    (:   \\___/    // ____  \\  (:   \\___/  \n");
+    uart_puts("\033[1;33m");  // Bright yellow color
+    uart_puts("     |:  |    /' /\\  \\    \\___  \\     /  /    ) :)  \\___  \\    \n");
+    uart_puts("\033[1;32m");  // Bright green color
+    uart_puts("  ___|  /    //  __'  \\    __/  \\\\   (: (____/ //    __/  \\\\   \n");
+    uart_puts("\033[1;31m");  // Bright red color
+    uart_puts(" /  :|_/ )  /   /  \\\\  \\  /\" \\   :)   \\        /    /\" \\   :)  \n");
+    uart_puts("\033[1;37m");  // Bright white color
+    uart_puts("(_______/  (___/    \\___)(_______/     \\\"_____/    (_______/   \n");
+    uart_puts("                                                               \n");
+    uart_puts("\033[0m\n");   // Reset to default color
     
+    uart_puts("JasOS Kernel v0.2 (UART ONLY)\n");
     uart_puts("This version uses only UART for I/O.\n");
     uart_puts("The display initialization is skipped.\n\n");
     

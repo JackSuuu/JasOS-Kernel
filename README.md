@@ -1,5 +1,7 @@
 # JasOS Kernel
 
+![Fancy boot text](fancy.png)
+
 A simple, educational ARM-based operating system kernel running on QEMU. This is a text-based UART-only version that includes basic OS components.
 
 ![JasOS Banner](banner.png)
