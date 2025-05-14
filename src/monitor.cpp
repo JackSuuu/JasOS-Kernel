@@ -25,6 +25,7 @@ void monitor_draw_line(char c, int length) {
 
 // Helper function to convert int to string
 void monitor_int_to_str(unsigned int num, char* str) {
+    // base case: if it has 0 add terminator directly
     if (num == 0) {
         str[0] = '0';
         str[1] = '\0';
@@ -34,11 +35,13 @@ void monitor_int_to_str(unsigned int num, char* str) {
     int i = 0;
     char temp[16];
     
+    // convert each int to str use ASCII
     while (num > 0) {
         temp[i++] = '0' + (num % 10);
         num /= 10;
     }
     
+    // reverse the temp string and copy
     for (int j = 0; j < i; j++) {
         str[j] = temp[i - j - 1];
     }
